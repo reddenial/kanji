@@ -1,6 +1,6 @@
 import React from 'react'
-import '../styles/Layout.css'
-import KanjiCard from './KanjiCard'
+import '../styles/Layout.scss'
+import KanjiList from './KanjiList'
 import Aside from './Aside'
 
 class App extends React.Component {
@@ -30,7 +30,8 @@ class App extends React.Component {
             .then(response => response.json())
             .then(
                 (result) => {
-                    console.log(result)
+                    document.getElementById('loader').style.display = 'none';
+
                     this.setState({
                         isLoaded: true,
                         listOfKanjis: result,
@@ -48,46 +49,17 @@ class App extends React.Component {
             )
     }
 
-
-    handleClick(e, kanji) {
-        e.currentTarget.classList.toggle('active');
-        console.log(kanji)
-
-        const kanjiCards = this.state.kanjiCards;
-
-        console.log(kanjiCards);
-        if (!kanjiCards.includes(kanji.character)) {
-            kanjiCards.push(kanji.character);
-        } else {
-            const index = kanjiCards.indexOf(kanji.character);
-
-            kanjiCards.splice(index, 1);
-        }
-
-        this.setState({
-            kanjiCards: kanjiCards
-        });
-    }
-
     render() {
-
-        const kanjiCards = this.state.kanjiCards;
 
         return (
             <div className="main">
-                <ul className="kanjiList">
-                    {this.state.listOfKanjis.slice(0, 100).map(({ examples, kanji, radical, references }) =>
-                        <KanjiCard
-                            key={'kanji-' + kanji.meaning.english + references.kodansha}
-                            examples={examples}
-                            kanji={kanji}
-                            radical={radical}
-                            references={references}
-                            onClick={(e) => this.handleClick(e, kanji)}
-                        />
-                    )}
-                </ul>
-                <Aside kanjiCards={kanjiCards} />
+                <div id="loader">
+                    <div className="lds-dual-ring"></div>
+                </div>
+                <KanjiList 
+                    data={this.state.listOfKanjis} 
+                    kanjiCards={this.state.kanjiCards} 
+                />
             </div>
         )
     }

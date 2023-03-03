@@ -1,4 +1,4 @@
-import '../styles/KanjiCard.css'
+import '../styles/KanjiCard.scss'
 
 function KanjiCard({ examples, kanji, radical, references, onClick }) {
     return (

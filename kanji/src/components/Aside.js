@@ -1,4 +1,4 @@
-import '../styles/Aside.css'
+import '../styles/Aside.scss'
 
 function Aside({ kanjiCards }) {
     return (
